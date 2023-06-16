@@ -330,7 +330,11 @@ class Api {
 
   addContact = (userId) => {
     return this._client.addFavourite(userId, true);
-   }
+  }
+  
+  removeContact = (userId) => { 
+    return this._client.deleteFavourite(userId, true);
+  }
 
   smartTradingTextParse = async (text, address) => {
     const transaction = await this._client.smartTradingTextParse(text, address);
