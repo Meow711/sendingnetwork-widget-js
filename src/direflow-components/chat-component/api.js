@@ -324,6 +324,14 @@ class Api {
     }
   }
 
+  getContacts =  () => {
+    return this._client.getFavouriteList();
+  }
+
+  addContact = (userId) => {
+    return this._client.addFavourite(userId, true);
+   }
+
   smartTradingTextParse = async (text, address) => {
     const transaction = await this._client.smartTradingTextParse(text, address);
     return transaction;
