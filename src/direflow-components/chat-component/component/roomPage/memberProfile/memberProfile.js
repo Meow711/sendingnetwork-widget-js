@@ -7,7 +7,7 @@ import { roomTitleBackIcon, copyIcon } from "../../../imgs/index";
 import { showToast, formatTextLength } from "../../../utils/index";
 import { AvatarComp } from "../../avatarComp/avatarComp";
 
-const MemberProfile = ({ memberId, onBack }) => {
+const MemberProfile = ({ memberId, onBack, go2DMroom }) => {
   const [walletAddr, setWalletAddr] = useState("");
   const [displayname, setDisplayname] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
@@ -23,6 +23,14 @@ const MemberProfile = ({ memberId, onBack }) => {
     setDisplayname(displayname);
   };
 
+  const add2contact = () => {
+    api.addContact(memberId);
+  }
+
+  const removeContact = () => {
+    api.removeContact(memberId);
+  }
+
   return (
     <Styled styles={styles}>
       <div className="memberProfile">
@@ -33,31 +41,39 @@ const MemberProfile = ({ memberId, onBack }) => {
           </div>
           <div className="room_title_center">{formatTextLength(displayname, 30, 15)}</div>
         </div>
+        <div className="memberProfile_content">
+            {/* avatar */}
+            <div className="memberProfile_user_avatar">
+              <AvatarComp url={avatarUrl} />
+            </div>
 
-        {/* avatar */}
-        <div className="memberProfile_user_avatar">
-          <AvatarComp url={avatarUrl} />
+            {/* userName */}
+            <p className="memberProfile_alias-label">Display Name</p>
+            <div className="memberProfile_alias-text">{displayname}</div>
+
+            {/* userInfo */}
+            <p className="memberProfile_alias-label">Wallet Address</p>
+            <div className="memberProfile_userinfo-box-item">
+              <p>{walletAddr}</p>
+              <CopyToClipboard text={walletAddr} onCopy={(text, result) => {
+                if (result) {
+                  showToast({
+                    type: 'success',
+                    msg: 'Copied successful',
+                  })
+                }
+              }}>
+                  <img src={copyIcon} />
+              </CopyToClipboard>
+              
+            </div>
         </div>
-
-        {/* userName */}
-        <p className="memberProfile_alias-label">Display Name</p>
-        <div className="memberProfile_alias-text">{displayname}</div>
-
-        {/* userInfo */}
-        <p className="memberProfile_alias-label">Wallet Address</p>
-        <div className="memberProfile_userinfo-box-item">
-          <p>{walletAddr}</p>
-          <CopyToClipboard text={walletAddr} onCopy={(text, result) => {
-            if (result) {
-              showToast({
-                type: 'success',
-                msg: 'Copied successful',
-              })
-            }
-          }}>
-              <img src={copyIcon} />
-          </CopyToClipboard>
-        </div>
+        
+        <div className="btn-group">
+            <div className="btn-add" onClick={add2contact}>Add contact</div>
+            <div className="btn-remove" onClick={removeContact}>Remove contact</div>
+            <div className="btn-msg" onClick={go2DMroom}>message</div>
+          </div>
       </div>
 		</Styled>
   );
