@@ -12,7 +12,7 @@ import { api } from "../../api";
 import { formatTextLength, showToast } from "../../utils/index";
 import InputDialogComp from "../inputDialogComp/inputDialogComp";
 
-const InvitePage = ({ roomId, onBack }) => {
+const InvitePage = ({ roomId, onBack, title }) => {
 	const [filterStr, setFilterStr] = useState("");
 	const [searchList, setSearchList] = useState([]);
 	const [selectList, setSelectList] = useState([]);
@@ -137,7 +137,7 @@ const InvitePage = ({ roomId, onBack }) => {
 					<div className="title_back" onClick={handleBackClick}>
 						<img src={roomTitleBackIcon} />
 					</div>
-					<div className="title_text">New Chat</div>
+					<div className="title_text">{ title || "New Chat"}</div>
 				</div>
 
 				{/* search */}

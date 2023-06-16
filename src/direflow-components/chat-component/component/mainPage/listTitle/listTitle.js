@@ -8,7 +8,7 @@ import {
   widgetTitleLogout
 } from "../../../imgs/index";
 
-const ListTitle = ({ closeModalms, menuClick }) => {
+const ListTitle = ({ closeModalms, menuClick, openContacs }) => {
   const [showSetBox, setShowSetBox] = useState(false);
 
   useEffect(() => {
@@ -25,6 +25,7 @@ const ListTitle = ({ closeModalms, menuClick }) => {
   return (
     <Styled styles={styles}>
       <div className="chat_widget_title">
+        <div onClick={openContacs}>contacs</div>
         <div className="chat_widget_title_text">Chat</div>
         <div className="chat_widget_title_set" onClick={(e) => {
           e.stopPropagation();
@@ -37,6 +38,10 @@ const ListTitle = ({ closeModalms, menuClick }) => {
             <div className="chat_widget_title_setBox_item" onClick={() => handleMenuClick('create')}>
               <img src={widgetTitleMoreCreate} />
               <span>New Chat</span>
+            </div>
+            <div className="chat_widget_title_setBox_item" onClick={() => handleMenuClick('search')}>
+              <img src={widgetTitleMoreCreate} />
+              <span>Add Contact</span>
             </div>
             <div className="chat_widget_title_setBox_item" onClick={() => handleMenuClick('set')}>
               <img src={widgetTitleMoreSet} />
