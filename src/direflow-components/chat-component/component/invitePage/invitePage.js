@@ -129,7 +129,9 @@ const InvitePage = ({ roomId, onBack }) => {
 
   return (
     <Styled styles={styles}>
-      <div className="invite_page">
+		<div className="invite_page">
+			<div className="left" onClick={onBack}></div>
+			<div className="right">
 				{/* title */}
 				<div className="invite_page_title">
 					<div className="title_back" onClick={handleBackClick}>
@@ -140,11 +142,11 @@ const InvitePage = ({ roomId, onBack }) => {
 
 				{/* search */}
 				<input
-          className="filter-box"
-          placeholder="Search"
-          value={filterStr}
-          onChange={(e) => setFilterStr(e.target.value)}
-        />
+					className="filter-box"
+					placeholder="Search"
+					value={filterStr}
+					onChange={(e) => setFilterStr(e.target.value)}
+				/>
 
 				{/* list */}
 				<div className="list-wrap">
@@ -181,22 +183,22 @@ const InvitePage = ({ roomId, onBack }) => {
 				</div>
 
 				{/* dialog */}
-        {showDialog && (
-          <div className="invite_page_dialog">
-            <div className="invite_page_dialog_content">
-              <div className="info">
-								{dialogStatus === 'loading' && (
-									<div className="invite_page_dialog_loading">
-										<img src={dialogLoadingIcon} />
-										<span>Processing...</span>
-									</div>
-								)}
-								{dialogStatus === 'success' && (<p className="info-desc">{dialogText}</p>)}
-              </div>
-							{dialogStatus === 'success' && (<div className="btns" onClick={handleBackClick}>Ok</div>)}
-            </div>
-          </div>
-        )}
+				{showDialog && (
+					<div className="invite_page_dialog">
+					<div className="invite_page_dialog_content">
+						<div className="info">
+										{dialogStatus === 'loading' && (
+											<div className="invite_page_dialog_loading">
+												<img src={dialogLoadingIcon} />
+												<span>Processing...</span>
+											</div>
+										)}
+										{dialogStatus === 'success' && (<p className="info-desc">{dialogText}</p>)}
+						</div>
+									{dialogStatus === 'success' && (<div className="btns" onClick={handleBackClick}>Ok</div>)}
+					</div>
+					</div>
+				)}
 
 				{/* input-dialog */}
 				{showInputDialog && (
@@ -212,7 +214,8 @@ const InvitePage = ({ roomId, onBack }) => {
 					/>
 				)}
 			</div>
-		</Styled>
+		</div>
+	</Styled>
   );
 };
 

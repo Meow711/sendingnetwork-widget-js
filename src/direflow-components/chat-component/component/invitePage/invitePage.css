@@ -1,10 +1,28 @@
 .invite_page {
-    background-color: var(--bg-color);
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+.invite_page .left {
+    background-color: rgba(0, 0, 0, 0.2);
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+}
+
+.invite_page .right {
+    background-color: var(--bg-color);
+    width: 500px;
     height: 100%;
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    box-shadow: 0 -8px 30px 0 rgba(0, 0, 0, 0.28);
 }
 
 /* title */
