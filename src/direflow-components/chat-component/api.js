@@ -309,6 +309,10 @@ class Api {
     this._client.leave(roomId, callback);
   };
 
+  deleteRoom = (roomId) => {
+    this._client.deleteRoom(roomId);
+  };
+
   getUserId = () => {
     return this._client.getUserId();
   };
