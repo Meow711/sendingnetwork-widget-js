@@ -14,11 +14,34 @@ export default function ContactsPage({ onBack, onOpenRoom }) {
     const [filterStr, setFilterStr] = useState("");
     const [filterList, setFilterList] = useState([]);
 
+    const getUsers = async (wallets) => {
+        const res = await window.seeDAOosApi.getUsers(wallets);
+        const map = {};
+        res.data.forEach((u) => {
+            map[u.wallet] = u;
+        });
+        return map;
+    };
+
     const getContacts = async () => {
         const res = await api.getContacts();
         const sourceList = res.people;
-        // TODO get info from os
-        setList(sourceList);
+        if (process.env.NODE_ENV === "development") {
+            setList(sourceList);
+        } else {
+            // get info from os
+            const user_map = await getUsers(sourceList.map((p) => p.wallet_address));
+            setList(
+                sourceList.map((s) => {
+                    const u = user_map[s.wallet_address.toLowerCase()];
+                    return {
+                        ...s,
+                        avatar_url: u.avatar,
+                        displayname: u.name,
+                    };
+                }),
+            );
+        }
     };
 
     useEffect(() => {
@@ -38,7 +61,10 @@ export default function ContactsPage({ onBack, onOpenRoom }) {
         if (!filterStr) {
             setFilterList(list);
         } else {
-            // TODO filter displayname or wallet_address
+            const newList = list.filter(
+                (p) => p.displayname.includes(filterStr) || p.wallet_address.toLowerCase().includes(filterStr),
+            );
+            setFilterList(newList);
         }
     }, [filterStr, list]);
 
@@ -70,7 +96,7 @@ export default function ContactsPage({ onBack, onOpenRoom }) {
                                 </div>
                                 <div>
                                     <p>{p.displayname}</p>
-                                    <p>{p.contact_id.slice(0, 10)}...</p>
+                                    <p>{p.wallet_address}</p>
                                 </div>
                             </li>
                         ))}

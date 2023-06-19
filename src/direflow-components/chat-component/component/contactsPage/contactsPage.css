@@ -30,11 +30,12 @@
 
 
 .contact-item {
-    border: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
     margin: 5px 20px;
     padding: 10px;
     display: flex;
     gap: 20px;
+    align-items: center;
     
 }
 .contact-item .contact-avatar {
