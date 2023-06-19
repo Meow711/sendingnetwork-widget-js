@@ -10,7 +10,7 @@ import MemberProfile from "./memberProfile/memberProfile";
 import { api } from "../../api";
 
 
-const RoomPage = ({ roomId, callback }) => {
+const RoomPage = ({ roomId, callback, onChangeRoom }) => {
   const [curRoomId, setCurRoomId] = useState("");
   const [curRoom, setCurRoom] = useState(null);
   const [showUrlPreviewWidget, setShowUrlPreviewWidget] = useState(false);
@@ -24,10 +24,10 @@ const RoomPage = ({ roomId, callback }) => {
       setCurRoomId(roomId);
       initRoomData(roomId);
     }
-  }, [])
+  }, [roomId])
 
-  const initRoomData = () => {
-    const room = api._client.getRoom(roomId);
+  const initRoomData = (_roomId) => {
+    const room = api._client.getRoom(_roomId);
     if (room) {
       const events = room.getLiveTimeline().getEvents();
       if (events.length) {
@@ -96,35 +96,40 @@ const RoomPage = ({ roomId, callback }) => {
     setShowType('memberProfile');
   }
 
+  const go2DMroom = async () => {
+    const newRoomId = await api.createDMRoom(memberProfileId);
+    onChangeRoom(newRoomId);
+    setMemberProfileId("");
+    setShowType('room');
+  }
+
   return (
     <Styled styles={styles}>
       <div className="roomPage">
         {showType === 'profile' && <RoomProfile room={curRoom} backClick={handleProfileBack} />}
-        {showType === 'invite' && <InvitePage roomId={curRoomId} onBack={() => setShowType('room')} />}
-        {showType === 'memberProfile' && <MemberProfile memberId={memberProfileId} onBack={() => {
+        {showType === 'invite' && <InvitePage roomId={curRoomId} onBack={() => setShowType('room')} title="Invite" />}
+        {showType === 'memberProfile' && <MemberProfile memberId={memberProfileId} go2DMroom={go2DMroom} onBack={() => {
           setMemberProfileId("");
           setShowType('room');
         }} />}
-        {showType === 'room' && (
-          <div className="chat_widget_room_page">
-            <RoomTitle room={curRoom} onBack={onBack} setClick={() => setShowType('profile')} />
-            {pinnedIds.length > 0 && (
-              <PinnedMsgCard
-                roomId={roomId}
-                pinnedIds={pinnedIds}
-                pinnedCloseClick={pinnedCloseClick}
-              />
-            )}
-            <RoomView
+        <div className="chat_widget_room_page">
+          <RoomTitle room={curRoom} onBack={onBack} setClick={() => setShowType('profile')} />
+          {pinnedIds.length > 0 && (
+            <PinnedMsgCard
               roomId={roomId}
               pinnedIds={pinnedIds}
-              openUrlPreviewWidget={openUrlPreviewWidget}
-              pinClick={pinClick}
-              pinEventSync={pinEventSync}
-              memberAvatarClick={memberAvatarClick}
+              pinnedCloseClick={pinnedCloseClick}
             />
-          </div>
-        )}
+          )}
+          <RoomView
+            roomId={roomId}
+            pinnedIds={pinnedIds}
+            openUrlPreviewWidget={openUrlPreviewWidget}
+            pinClick={pinClick}
+            pinEventSync={pinEventSync}
+            memberAvatarClick={memberAvatarClick}
+          />
+        </div>
       </div>
 		</Styled>
   );

@@ -42,6 +42,8 @@ const InvitePage = ({ roomId, onBack, title }) => {
 						}
 					})
 					setSearchList(tmpArr)
+				} else if (resp && resp.results) {
+					setSearchList([])
 				}
 			}).catch(err => {
 				setSearchList([])

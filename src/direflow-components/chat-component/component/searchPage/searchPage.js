@@ -44,6 +44,8 @@ const SwarchPage = ({ roomId, onBack, onOpenRoom }) => {
 						}
 					})
 					setSearchList(tmpArr)
+				} else if (resp && resp.results) {
+					setSearchList([])
 				}
 			}).catch(err => {
 				setSearchList([])
