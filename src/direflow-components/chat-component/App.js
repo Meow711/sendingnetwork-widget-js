@@ -67,6 +67,10 @@ const App = (props) => {
     });
   };
 
+  const onChangeRoom = (new_room_id) => {
+    setCurRoomId(new_room_id);
+  }
+
   const renderPage = () => {
     switch (pageType) {
       case 'loginPage': 
@@ -102,7 +106,7 @@ const App = (props) => {
           }}
         />
       case 'roomPage':
-        return <RoomPage roomId={curRoomId} callback={() => {
+        return <RoomPage roomId={curRoomId} onChangeRoom={onChangeRoom}  callback={() => {
           setCurRoomId("")
           setPageType('mainPage')
         }} />
@@ -157,8 +161,8 @@ App.defaultProps = {
   defaultShowWidget: true,
   useThirdLogin: false,
   filterWords: [],
-  widgetWidth: "350px",
-  widgetHeight: "680px",
+  widgetWidth: "100vw",
+  widgetHeight: "100vh",
   widgetBoxShadow: "0px 4px 20px rgba(0, 0, 0, 0.3)",
   bgColor: "#EAECEE",
   mainTextColor: "#333",
