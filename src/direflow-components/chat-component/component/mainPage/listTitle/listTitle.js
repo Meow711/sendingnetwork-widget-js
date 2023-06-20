@@ -31,26 +31,26 @@ const ListTitle = ({ closeModalms, menuClick, openContacs }) => {
           e.stopPropagation();
           setShowSetBox(!showSetBox);
         }}>
-          <img src={widgetTitleMore} />
+          <img src={widgetTitleMoreCreate} />
         </div>
         {showSetBox && (
           <div className="chat_widget_title_setBox" onClick={(e) => { e.stopPropagation() }}>
             <div className="chat_widget_title_setBox_item" onClick={() => handleMenuClick('create')}>
-              <img src={widgetTitleMoreCreate} />
+              {/* <img src={widgetTitleMoreCreate} /> */}
               <span>New Chat</span>
             </div>
             <div className="chat_widget_title_setBox_item" onClick={() => handleMenuClick('search')}>
-              <img src={widgetTitleMoreCreate} />
+              {/* <img src={widgetTitleMoreCreate} /> */}
               <span>Add Contact</span>
             </div>
-            <div className="chat_widget_title_setBox_item" onClick={() => handleMenuClick('set')}>
+            {/* <div className="chat_widget_title_setBox_item" onClick={() => handleMenuClick('set')}>
               <img src={widgetTitleMoreSet} />
               <span>Settings</span>
-            </div>
-            <div className="chat_widget_title_setBox_item" onClick={() => handleMenuClick('logout')}>
+            </div> */}
+            {/* <div className="chat_widget_title_setBox_item" onClick={() => handleMenuClick('logout')}>
               <img src={widgetTitleLogout} />
               <span>Logout</span>
-            </div>
+            </div> */}
           </div>
         )}
 			</div>

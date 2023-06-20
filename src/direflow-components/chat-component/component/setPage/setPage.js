@@ -4,7 +4,7 @@ import styles from "./setPage.css";
 import { api } from "../../api";
 import { roomTitleBackIcon, copyIcon } from "../../imgs/index";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { showToast } from "../../utils/index";
+import { formatUsers, showToast } from "../../utils/index";
 import { AvatarComp } from "../avatarComp/avatarComp";
 
 const SetPage = ({ onBack }) => {
@@ -20,11 +20,12 @@ const SetPage = ({ onBack }) => {
 
   const getProfileInfo = async () => {
     const userId = api._client.getUserId();
-    const { avatar_url, displayname, wallet_address } = await api._client.getProfileInfo(userId);
-    setWalletAddr(wallet_address);
-    setAvatarUrl(avatar_url);
-    setOldDisplayname(displayname);
-    setDisplayname(displayname);
+    const userData = await api._client.getProfileInfo(userId);
+    const [newUser] = await formatUsers([userData]);
+    setWalletAddr(newUser.wallet_address);
+    setAvatarUrl(newUser.avatar_url);
+    setOldDisplayname(newUser.displayname);
+    setDisplayname(newUser.displayname);
   };
 
   const handleSave = async () => {
