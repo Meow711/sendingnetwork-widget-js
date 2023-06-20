@@ -4,7 +4,7 @@ import styles from "./roomProfile.css";
 import { api } from "../../../api";
 import { roomTitleBackIcon } from "../../../imgs/index";
 import { AvatarComp } from "../../avatarComp/avatarComp";
-import { calculateRoomName, showToast } from "../../../utils/index";
+import { calculateRoomName, formatUsers, showToast } from "../../../utils/index";
 
 const RoomProfile = ({ room = {}, backClick }) => {
     const [showSetting, setShowSetting] = useState(false);
@@ -13,13 +13,26 @@ const RoomProfile = ({ room = {}, backClick }) => {
     const [showEdit, setShowEdit] = useState(false);
     const [editName, setEditName] = useState("");
 
-    useEffect(() => {
+    const handleMembers = async () => {
         const members = room.getJoinedMembers();
-        console.log("members:", members);
+        const formatMembers = members.map((member) => { 
+            const wallet = member.userId.split(":")[1];
+            return {
+                ...member.user,
+                wallet_address: wallet,
+            }
+        })
+        const newMembers = await formatUsers(formatMembers)
         const tmpName = calculateRoomName(room, true);
+        console.log("members:", newMembers);
+
         setRoomName(tmpName);
         setEditName(tmpName);
-        setJoinedMembers(members);
+        setJoinedMembers(newMembers);
+    }
+
+    useEffect(() => {
+        handleMembers()
     }, []);
 
     const handleBackClick = () => {
@@ -97,13 +110,13 @@ const RoomProfile = ({ room = {}, backClick }) => {
                     <div className="room_members">
                         {joinedMembers.map((member) => {
                             return (
-                                <div className="room_members_item" key={member.userId}>
+                                <div className="room_members_item" key={member.wallet_address}>
                                     <div className="room_members_item_avatar">
-                                        <AvatarComp url={member?.user?.avatarUrl} />
+                                        <AvatarComp url={member.avatarUrl} />
                                     </div>
                                     <div className="room_members_item_desc">
-                                        <p className="room_members_item_desc_name">{member.name}</p>
-                                        <p className="room_members_item_desc_addr">{member.userId}</p>
+                                        <p className="room_members_item_desc_name">{member.displayname}</p>
+                                        <p className="room_members_item_desc_addr">{member.wallet_address}</p>
                                     </div>
                                 </div>
                             );
