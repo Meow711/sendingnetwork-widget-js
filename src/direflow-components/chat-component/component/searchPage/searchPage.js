@@ -9,9 +9,10 @@ import {
 	dialogLoadingIcon
 } from "../../imgs/index"
 import { api } from "../../api";
-import { formatTextLength, showToast } from "../../utils/index";
+import { formatTextLength, formatUsers, showToast } from "../../utils/index";
 import InputDialogComp from "../inputDialogComp/inputDialogComp";
 import MemberProfile from "../roomPage/memberProfile/memberProfile";
+import Web3 from "web3";
 
 const SwarchPage = ({ roomId, onBack, onOpenRoom }) => {
 	const [filterStr, setFilterStr] = useState("");
@@ -23,33 +24,39 @@ const SwarchPage = ({ roomId, onBack, onOpenRoom }) => {
 
 	const [selectUser, setSelectUser] = useState();
 
-	useEffect(() => {
-		if (!filterStr) {
-			setSearchList([]);
-		} else {
-			let tmpStr = filterStr;
+	const handleSearch = async () => {
+		let tmpStr = filterStr.toLowerCase();
 			if (/^0[x|X]./g.test(tmpStr)) {
 				const tmpStrArr = tmpStr.match(/^0[x|X](.+)/);
 				tmpStr = tmpStrArr[1] || tmpStr;
 			}
-			api._client.searchUserDirectory({
+		try {
+			const resp = api._client.searchUserDirectory({
 				term: tmpStr,
 				limit: 10
-			}).then((resp) => {
-				if (resp && resp.results && resp.results.length > 0) {
-					const tmpArr = resp.results.map(item => {
-						return {
-							...item,
-							isSelected: isSearchUserSelected(item)
-						}
-					})
-					setSearchList(tmpArr)
-				} else if (resp && resp.results) {
-					setSearchList([])
-				}
-			}).catch(err => {
-				setSearchList([])
 			})
+			if (resp && resp.results && resp.results.length > 0) {
+				const tmpArr = resp.results.map(item => {
+					return {
+						...item,
+						isSelected: isSearchUserSelected(item)
+					}
+				})
+				const formatList = await formatUsers(tmpArr);
+				setSearchList(formatList)
+			} else if (resp && resp.results) {
+				setSearchList([])
+			}
+		} catch (error) {
+			setSearchList([])
+		}
+	}
+
+	useEffect(() => {
+		if (!filterStr || !Web3.utils.isAddress(filterStr)) {
+			setSearchList([]);
+		} else {
+			handleSearch();
 		}
 	}, [filterStr])
 

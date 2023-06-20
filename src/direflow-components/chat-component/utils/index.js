@@ -122,7 +122,31 @@ export const calculateRoomName = (room, isShowCount) => {
   return result
 };
 
+const getOSusers = async (wallets) => {
+  const res = await window.seeDAOosApi.getUsers(wallets);
+  const map = {};
+  res.data.forEach((u) => {
+      map[u.wallet] = u;
+  });
+  return map;
+};
 
+export const formatUsers = async (user_list) => { 
+  if (process.env.NODE_ENV === "development") {
+    return user_list;
+  } else {
+      // get info from os
+    const user_map = await getOSusers(user_list.map(u => u.wallet_address.toLowerCase()));
+      return user_list.map((s) => {
+        const u = user_map[s.wallet_address.toLowerCase()];
+        return {
+          ...s,
+          avatar_url: u.avatar,
+          displayname: u.name,
+        };
+      });
+  }
+}
 
 /**
  * 

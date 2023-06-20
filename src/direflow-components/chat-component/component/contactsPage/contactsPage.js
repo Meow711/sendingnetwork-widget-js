@@ -7,6 +7,7 @@ import { AvatarComp } from "../avatarComp/avatarComp";
 import MemberProfile from "../roomPage/memberProfile/memberProfile";
 
 import { roomTitleBackIcon } from "../../imgs/index";
+import { formatUsers } from "../../utils/index";
 
 export default function ContactsPage({ onBack, onOpenRoom }) {
     const [list, setList] = useState([]);
@@ -26,22 +27,7 @@ export default function ContactsPage({ onBack, onOpenRoom }) {
     const getContacts = async () => {
         const res = await api.getContacts();
         const sourceList = res.people;
-        if (process.env.NODE_ENV === "development") {
-            setList(sourceList);
-        } else {
-            // get info from os
-            const user_map = await getUsers(sourceList.map((p) => p.wallet_address));
-            setList(
-                sourceList.map((s) => {
-                    const u = user_map[s.wallet_address.toLowerCase()];
-                    return {
-                        ...s,
-                        avatar_url: u.avatar,
-                        displayname: u.name,
-                    };
-                }),
-            );
-        }
+        setList(await formatUsers(sourceList));
     };
 
     useEffect(() => {
