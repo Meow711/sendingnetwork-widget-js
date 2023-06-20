@@ -4,7 +4,7 @@ import styles from "./memberProfile.css";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { api } from "../../../api";
 import { roomTitleBackIcon, copyIcon } from "../../../imgs/index";
-import { showToast, formatTextLength } from "../../../utils/index";
+import { formatUsers, showToast, formatTextLength } from "../../../utils/index";
 import { AvatarComp } from "../../avatarComp/avatarComp";
 
 const MemberProfile = ({ memberId, onBack, go2DMroom }) => {
@@ -17,10 +17,11 @@ const MemberProfile = ({ memberId, onBack, go2DMroom }) => {
   }, [memberId]);
 
   const getProfileInfo = async () => {
-    const { avatar_url, displayname, wallet_address } = await api._client.getProfileInfo(memberId);
-    setWalletAddr(wallet_address);
-    setAvatarUrl(avatar_url);
-    setDisplayname(displayname);
+    const userData = await api._client.getProfileInfo(memberId);
+    const [newUser] = await formatUsers([userData]);
+    setWalletAddr(newUser.wallet_address);
+    setAvatarUrl(newUser.avatar_url);
+    setDisplayname(newUser.displayname);
   };
 
   const add2contact = () => {
