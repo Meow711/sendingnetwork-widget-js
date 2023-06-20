@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Styled } from "direflow-component";
 import styles from "./messageItem.css";
 import { api } from "../../../api";
@@ -20,13 +20,20 @@ const MessageItem = ({
 }) => {
   const { event_id, sender, type, content, origin_server_ts } = message;
   const userId = room.myUserId;
-  const userData = api._client.getUser(sender);
-  const { displayname } = myUserData;
-  const atUserName = '@'+displayname;
 
   const [showMore, setShowMore] = useState(false);
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [pinText, setPinText] = useState("Pin");
+
+  const userData = useMemo(() => {
+    return members.find((member) => member.userId === sender) || api._client.getUser(sender);
+  }, [message.sender, members])
+
+  const atUserName = useMemo(() => {
+    const _user =  members.find((member) => member.userId === myUserData.userId) || {}
+    const _name = _user.displayname || myUserData.displayname;
+    return '@'+_name;
+  }, [myUserData.userId, members])
 
   useEffect(() => {
     if (pinnedIds && pinnedIds[0] === event_id) {
@@ -45,8 +52,7 @@ const MessageItem = ({
   const formatSender = (sender) => {
     const member = members.find((member) => member.userId == sender);
     if (member) {
-      const { name } = member;
-      return formatTextLength(name, 13, 5)
+      return member.displayname || member.displayName;
     }
     return "";
   };

@@ -4,7 +4,7 @@ import Censor from "mini-censor";
 import { Styled } from "direflow-component";
 import styles from "./roomView.css";
 import { api } from "../../../api";
-import { filterLibrary } from "../../../utils/index";
+import { filterLibrary, formatUsers } from "../../../utils/index";
 import { roomViewBg } from "../../../imgs/index";
 import RoomInput from "./roomInput/roomInput";
 import MessageItem from "../messageItem/messageItem";
@@ -39,7 +39,10 @@ const RoomView = ({
 
   const initMyData = async () => {
     const userData = await api._client.getProfileInfo(room.myUserId);
-    setMyUserData(userData);
+    setMyUserData({
+      ...userData,
+      userId: room.myUserId,
+    });
   }
 
   // fun
@@ -80,15 +83,16 @@ const RoomView = ({
 
   const queryMembers = async () => {
     const members = room.getJoinedMembers();
-    members.forEach((m) => {
-      if (!m.user) {
-        const user = api._client.getUser(m.userId);
-        const [, address] = m.userId.split(":");
-        user.setWalletAddress(`0x${address}`);
-        m.user = user;
-      }
-    });
-    setMembers(members);
+    const formatMembers = members.map((m) => { 
+      const user = api._client.getUser(m.userId);
+      const [, address] = m.userId.split(":");
+      return {
+          ...user,
+          wallet_address: `0x${address}`,
+        }
+    })
+    const newMembers = await formatUsers(formatMembers)
+    setMembers(newMembers);
   };
 
   const onTimeLine = async (event) => {
