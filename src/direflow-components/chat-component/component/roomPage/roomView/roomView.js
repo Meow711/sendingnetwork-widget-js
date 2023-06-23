@@ -204,7 +204,7 @@ const RoomView = ({
         </InfiniteScroll>
         
         {/* input Comp */}
-        <RoomInput roomId={roomId} />
+        <RoomInput roomId={roomId} memberList={ members.filter(m => m.userId !== room.myUserId || '')} />
         
         {/* img preview */}
         {isShowPreviewImg && (

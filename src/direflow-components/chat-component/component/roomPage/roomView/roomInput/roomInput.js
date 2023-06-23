@@ -9,7 +9,7 @@ import { web3ContractConstant, tokenList } from "../../../../utils/index";
 import { checkChain } from "../../../../utils/gasFee";
 import { AvatarComp } from "../../../avatarComp/avatarComp";
 
-const RoomInput = ({ roomId }) => {
+const RoomInput = ({ roomId, memberList }) => {
   const ethereum = window.ethereum;
   const web3 = new Web3(ethereum);
   const uploadRef = useRef(null);
@@ -20,12 +20,12 @@ const RoomInput = ({ roomId }) => {
   const [showTokenSwapTip, setShowTokenSwapTip] = useState(false);
   
   const [showMemberList, setShowMemberList] = useState(false);
-  const [memberList, setMemberList] = useState([]);
+  // const [memberList, setMemberList] = useState([]);
   const [memberListFocus, setMemberListFocus] = useState(0);
 
-  useEffect(() => {
-    initMembers();
-  }, [roomId])
+  // useEffect(() => {
+  //   initMembers();
+  // }, [roomId])
 
   // useEffect(() => {
   //   handleTransferTip()
@@ -193,14 +193,14 @@ const RoomInput = ({ roomId }) => {
     }
   }
 
-  const initMembers = () => {
-    if (!roomId) return;
-    const room = api._client.getRoom(roomId);
-    const members = room.getJoinedMembers();
-    const currentUserId = api._client.getUserId();
-    const memberArr = members.filter(v => v.userId !== currentUserId);
-    setMemberList(memberArr);
-  }
+  // const initMembers = () => {
+  //   if (!roomId) return;
+  //   const room = api._client.getRoom(roomId);
+  //   const members = room.getJoinedMembers();
+  //   const currentUserId = api._client.getUserId();
+  //   const memberArr = members.filter(v => v.userId !== currentUserId);
+  //   setMemberList(memberArr);
+  // }
 
   const upload = async (e) => {
     const file = e.target.files[0];
@@ -259,7 +259,7 @@ const RoomInput = ({ roomId }) => {
     }
     if (key === 'Enter' && showMemberList) {
       const m = memberList[memberListFocus];
-      const val = sendValue + m.name + " ";
+      const val = sendValue + (m.displayname || m.displayName) + " ";
       setShowMemberList(false);
       setMemberListFocus(0);
       setSendValue(val);
