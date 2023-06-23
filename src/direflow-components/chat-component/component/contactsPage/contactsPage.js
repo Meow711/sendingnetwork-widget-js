@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Styled } from "direflow-component";
 import styles from "./contactsPage.css";
 import { api } from "./../../api";
@@ -54,6 +54,10 @@ export default function ContactsPage({ onBack, onOpenRoom }) {
         }
     }, [filterStr, list]);
 
+    const isContact = useMemo(() => {
+        return !!list.find(l => l.contact_id === selectUser);
+    }, [selectUser, list])
+
     return (
         <Styled styles={styles}>
             <div className="contacts_page">
@@ -76,7 +80,7 @@ export default function ContactsPage({ onBack, onOpenRoom }) {
                     </div>
                     <ul>
                         {filterList.map((p, i) => (
-                            <li key={i} className="contact-item" onClick={() => setSelectUser(p.contact_id)}>
+                            <li key={i} className="contact-item" onClick={() => setSelectUser(p.contact_id)} style={{cursor: 'pointer'}}>
                                 <div className="contact-avatar">
                                     <AvatarComp url={p.avatar_url} />
                                 </div>
@@ -88,7 +92,7 @@ export default function ContactsPage({ onBack, onOpenRoom }) {
                         ))}
                     </ul>
                 </div>
-                {selectUser && <MemberProfile memberId={selectUser} go2DMroom={go2DMroom} onBack={onBack} />}
+                {selectUser && <MemberProfile memberId={selectUser} go2DMroom={go2DMroom} onBack={onBack} isContact={isContact} />}
             </div>
         </Styled>
     );

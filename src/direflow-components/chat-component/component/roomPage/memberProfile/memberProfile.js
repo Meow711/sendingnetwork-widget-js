@@ -7,7 +7,7 @@ import { roomTitleBackIcon, copyIcon } from "../../../imgs/index";
 import { formatUsers, showToast, formatTextLength } from "../../../utils/index";
 import { AvatarComp } from "../../avatarComp/avatarComp";
 
-const MemberProfile = ({ memberId, onBack, go2DMroom }) => {
+const MemberProfile = ({ memberId, onBack, go2DMroom, isContact }) => {
   const [walletAddr, setWalletAddr] = useState("");
   const [displayname, setDisplayname] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
@@ -24,12 +24,14 @@ const MemberProfile = ({ memberId, onBack, go2DMroom }) => {
     setDisplayname(newUser.displayname);
   };
 
-  const add2contact = () => {
-    api.addContact(memberId);
+  const add2contact = async () => {
+    await api.addContact(memberId);
+    onBack();
   }
 
-  const removeContact = () => {
-    api.removeContact(memberId);
+  const removeContact = async () => {
+    await api.removeContact(memberId);
+    onBack();
   }
 
   return (
@@ -71,8 +73,15 @@ const MemberProfile = ({ memberId, onBack, go2DMroom }) => {
         </div>
         
         <div className="btn-group">
-            <div className="btn-add" onClick={add2contact}>Add contact</div>
-            <div className="btn-remove" onClick={removeContact}>Remove contact</div>
+            {isContact ? (
+                <div className="btn-remove" onClick={removeContact}>
+                    Remove contact
+                </div>
+            ) : (
+                <div className="btn-add" onClick={add2contact}>
+                    Add contact
+                </div>
+            )}
             <div className="btn-msg" onClick={go2DMroom}>message</div>
           </div>
       </div>
