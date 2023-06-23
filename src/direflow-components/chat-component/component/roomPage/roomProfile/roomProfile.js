@@ -40,8 +40,9 @@ const RoomProfile = ({ room = {}, backClick }) => {
     };
 
     const handleSettingLeave = async () => {
-        await api.leave(room.roomId);
-        backClick("leaved");
+        await api.leave(room.roomId, () => {
+            backClick("leaved");
+        });
     };
 
     const handleDeleteRoom = async () => {

@@ -48,22 +48,24 @@ const RoomPage = ({ roomId, callback, onChangeRoom }) => {
     setUrlPreviewWidgetUrl(url);
   };
 
-  const onBack = () => {
-    const room = api._client.getRoom(curRoomId);
-    if (room) {
-      const events = room.getLiveTimeline().getEvents();
-      if (events.length) {
-        api._client.sendReadReceipt(events[events.length - 1]);
+  const onBack = (direct) => {
+    if (!direct) {
+      const room = api._client.getRoom(curRoomId);
+      if (room) {
+        const events = room.getLiveTimeline().getEvents();
+        if (events.length) {
+          api._client.sendReadReceipt(events[events.length - 1]);
+        }
       }
     }
+    callback();
     setCurRoomId("");
     setCurRoom(null);
-    callback();
   }
 
   const handleProfileBack = (type) => {
     switch (type) {
-      case 'leaved': onBack();
+      case 'leaved': onBack(true);
         break;
       case 'invite': setShowType('invite');
         break;

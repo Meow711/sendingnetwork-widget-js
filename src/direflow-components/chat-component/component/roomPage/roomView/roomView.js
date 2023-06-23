@@ -157,6 +157,10 @@ const RoomView = ({
     setTimeout(() => scrollToBottom(curSH), 100);
   };
 
+  if (!room) {
+    return <></>
+  }
+
   return (
     <Styled styles={styles}>
       <div
