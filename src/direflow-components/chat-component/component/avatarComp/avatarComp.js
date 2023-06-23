@@ -10,9 +10,9 @@ export const AvatarComp = ({ url = "" }) => {
   useEffect(() => {
     if (/(http|https):\/\/([\w.]+\/?)\S*/.test(url)) {
       setAvatarUrl(url)
-    } else if (url.startsWith('data:image')) { 
+    } else if (url && url.startsWith('data:image')) { 
       setAvatarUrl(url)
-    } else {
+    } else if (url) {
       const avatar_http = api._client.mxcUrlToHttp(url);
       setAvatarUrl(avatar_http)
     }
