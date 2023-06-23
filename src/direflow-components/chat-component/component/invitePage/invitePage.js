@@ -29,7 +29,7 @@ const InvitePage = ({ roomId, onBack, title }) => {
 				tmpStr = tmpStrArr[1] || tmpStr;
 			}
 		try {
-			const resp = api._client.searchUserDirectory({
+			const resp = await api._client.searchUserDirectory({
 				term: tmpStr,
 				limit: 10
 			})
