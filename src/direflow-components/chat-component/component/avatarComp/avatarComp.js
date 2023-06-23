@@ -10,6 +10,8 @@ export const AvatarComp = ({ url = "" }) => {
   useEffect(() => {
     if (/(http|https):\/\/([\w.]+\/?)\S*/.test(url)) {
       setAvatarUrl(url)
+    } else if (url.startsWith('data:image')) { 
+      setAvatarUrl(url)
     } else {
       const avatar_http = api._client.mxcUrlToHttp(url);
       setAvatarUrl(avatar_http)
@@ -18,8 +20,8 @@ export const AvatarComp = ({ url = "" }) => {
 
   return (
     <Styled styles={styles}>
-      <div className="avatar-comp" style={{backgroundImage: 'url('+ morePagePersonIcon +')'}}>
-        {avatarUrl && (<img className="avatar-comp_img" src={avatarUrl} />)}
+      <div className="avatar-comp" >
+        {avatarUrl ? <img className="avatar-comp_img" src={avatarUrl} /> : <div className="default" style={{backgroundImage: 'url('+ morePagePersonIcon +')'}}></div>}
 			</div>
 		</Styled>
   );

@@ -10,6 +10,11 @@
   overflow: hidden;
 }
 
+.avatar-comp .default {
+  width: 100%;
+  height: 100%;
+}
+
 .avatar-comp .avatar-comp_img {
   width: 100%;
   height: 100%;
