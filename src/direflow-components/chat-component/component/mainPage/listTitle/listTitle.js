@@ -7,6 +7,7 @@ import {
   widgetTitleMoreSet,
   widgetTitleLogout
 } from "../../../imgs/index";
+import ContactIcon from "../../../imgs/contact.png";
 
 const ListTitle = ({ closeModalms, menuClick, openContacs }) => {
   const [showSetBox, setShowSetBox] = useState(false);
@@ -25,7 +26,9 @@ const ListTitle = ({ closeModalms, menuClick, openContacs }) => {
   return (
     <Styled styles={styles}>
       <div className="chat_widget_title">
-        <div onClick={openContacs}>contacs</div>
+        <div onClick={openContacs} className="chat_widget_title_contact">
+          <img src={ContactIcon} />
+        </div>
         <div className="chat_widget_title_text">Chat</div>
         <div className="chat_widget_title_set" onClick={(e) => {
           e.stopPropagation();

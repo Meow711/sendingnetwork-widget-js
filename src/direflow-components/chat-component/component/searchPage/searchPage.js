@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Styled } from "direflow-component";
 import styles from "./searchPage.css";
 import {
@@ -23,6 +23,17 @@ const SwarchPage = ({ roomId, onBack, onOpenRoom }) => {
 	const [dialogText, setDialogText] = useState("");
 
 	const [selectUser, setSelectUser] = useState();
+
+	const [contacts, setcontacts] = useState([]);
+
+	const getcontacts = async () => { 
+		const res = await api.getContacts();
+        setcontacts(res.people);
+	}
+
+	useEffect(() => {
+		getcontacts();
+	}, [])
 
 	const handleSearch = async () => {
 		let tmpStr = filterStr.toLowerCase();
@@ -100,6 +111,10 @@ const SwarchPage = ({ roomId, onBack, onOpenRoom }) => {
 		const newRoomId = await api.createDMRoom(selectUser);
 		onOpenRoom(newRoomId);
 	}
+
+	const isContact = useMemo(() => {
+        return !!contacts.find(l => l.contact_id === selectUser);
+    }, [selectUser, contacts])
 	
   return (
     <Styled styles={styles}>
@@ -160,7 +175,7 @@ const SwarchPage = ({ roomId, onBack, onOpenRoom }) => {
 					</div>
 				</div>
 				)}
-				{selectUser && <MemberProfile memberId={selectUser} go2DMroom={go2DMroom} onBack={onBack} />}
+				{selectUser && <MemberProfile memberId={selectUser} go2DMroom={go2DMroom} onBack={onBack} isContact={isContact} />}
 			</div>
 		</div>
 	</Styled>
