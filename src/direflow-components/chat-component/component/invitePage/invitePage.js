@@ -12,6 +12,7 @@ import { api } from "../../api";
 import { formatTextLength, formatUsers, showToast } from "../../utils/index";
 import InputDialogComp from "../inputDialogComp/inputDialogComp";
 import Web3 from "web3";
+import { AvatarComp } from "../avatarComp/avatarComp";
 
 const InvitePage = ({ roomId, onBack, title }) => {
 	const [filterStr, setFilterStr] = useState("");
@@ -37,7 +38,8 @@ const InvitePage = ({ roomId, onBack, title }) => {
 				const tmpArr = resp.results.map(item => {
 					return {
 						...item,
-						isSelected: isSearchUserSelected(item)
+						isSelected: isSearchUserSelected(item),
+						wallet_address: `0x${item.user_id.split(':')[1]}`,
 					}
 				})
 				const formatList = await formatUsers(tmpArr);
@@ -169,11 +171,11 @@ const InvitePage = ({ roomId, onBack, title }) => {
 										<img src={item.isSelected ? inviteSelectedIcon : inviteUnselectIcon} />
 									</div>
 									<div className="members_item_avatar">
-										<img src={morePagePersonIcon} />
+										<AvatarComp url={item.avatar_url} />
 									</div>
 									<div className="members_item_desc">
 										<p className="members_item_desc_name">{formatTextLength(item.display_name, 13, 5)}</p>
-										<p className="members_item_desc_addr">{formatTextLength(item.user_id, 13, 5)}</p>
+										<p className="members_item_desc_addr">{item.wallet_address}</p>
 									</div>
 								</div>
 							)

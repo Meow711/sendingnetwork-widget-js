@@ -111,10 +111,10 @@
     justify-content: center;
     background-color: #ccc;
 }
-.members_item .members_item_avatar img {
+/* .members_item .members_item_avatar img {
     width: 45%;
     height: 45%;
-}
+} */
 .members_item .members_item_desc {
     height: 100%;
     width: calc(100% - 88px);

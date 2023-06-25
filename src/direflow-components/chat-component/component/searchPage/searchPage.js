@@ -9,10 +9,11 @@ import {
 	dialogLoadingIcon
 } from "../../imgs/index"
 import { api } from "../../api";
-import { formatTextLength, formatUsers, showToast } from "../../utils/index";
+import { formatTextLength, formatUsers } from "../../utils/index";
 import InputDialogComp from "../inputDialogComp/inputDialogComp";
 import MemberProfile from "../roomPage/memberProfile/memberProfile";
 import Web3 from "web3";
+import { AvatarComp } from "../avatarComp/avatarComp";
 
 const SwarchPage = ({ roomId, onBack, onOpenRoom }) => {
 	const [filterStr, setFilterStr] = useState("");
@@ -50,7 +51,7 @@ const SwarchPage = ({ roomId, onBack, onOpenRoom }) => {
 				const tmpArr = resp.results.map(item => {
 					return {
 						...item,
-						isSelected: isSearchUserSelected(item)
+						wallet_address: `0x${item.user_id.split(':')[1]}`,
 					}
 				})
 				const formatList = await formatUsers(tmpArr);
@@ -59,6 +60,7 @@ const SwarchPage = ({ roomId, onBack, onOpenRoom }) => {
 				setSearchList([])
 			}
 		} catch (error) {
+			console.error(error);
 			setSearchList([])
 		}
 	}
@@ -70,11 +72,6 @@ const SwarchPage = ({ roomId, onBack, onOpenRoom }) => {
 			handleSearch();
 		}
 	}, [filterStr])
-
-	const isSearchUserSelected = (user) => {
-		const isSelect = selectList.find(u => u.user_id === user.user_id);
-		return isSelect ? true : false;
-	}
 
 	const handleBackClick = () => {
 		setFilterStr("")
@@ -146,11 +143,11 @@ const SwarchPage = ({ roomId, onBack, onOpenRoom }) => {
 									handleSearchListClick(item)
 								}}>
 									<div className="members_item_avatar">
-										<img src={morePagePersonIcon} />
+										<AvatarComp url={item.avatar_url} />
 									</div>
 									<div className="members_item_desc">
 										<p className="members_item_desc_name">{formatTextLength(item.display_name, 13, 5)}</p>
-										<p className="members_item_desc_addr">{formatTextLength(item.user_id, 13, 5)}</p>
+										<p className="members_item_desc_addr">{item.wallet_address}</p>
 									</div>
 								</div>
 							)
