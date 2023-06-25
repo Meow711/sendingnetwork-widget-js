@@ -5,6 +5,7 @@ import { api } from "../../../api";
 import { roomTitleBackIcon } from "../../../imgs/index";
 import { AvatarComp } from "../../avatarComp/avatarComp";
 import { calculateRoomName, formatUsers, showToast } from "../../../utils/index";
+import EditIcon from "../../../imgs/edit.png";
 
 const RoomProfile = ({ room = {}, backClick }) => {
     const [showSetting, setShowSetting] = useState(false);
@@ -99,9 +100,11 @@ const RoomProfile = ({ room = {}, backClick }) => {
                             <button onClick={handleCancelName}>Cancel</button>
                         </div>
                     ) : (
-                        <div>
+                        <div className="title_back_setting_box">
                             <span className="title_back_setting">{roomName}</span>
-                            <span onClick={() => setShowEdit(true)}>Edit</span>
+                            <span onClick={() => setShowEdit(true)} className="btn-edit">
+                                <img src={EditIcon } alt="" />
+                            </span>
                         </div>
                     )}
                 </div>

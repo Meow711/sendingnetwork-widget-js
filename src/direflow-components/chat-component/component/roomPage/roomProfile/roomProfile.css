@@ -37,6 +37,24 @@
     line-height: 22px;
     color: var(--main-text-color);
 }
+.room_profile_title .title_back_setting_box {
+    display: flex;
+    align-items: center;
+    gap: 6px
+}
+.room_profile_title .title_back_setting_box .btn-edit {
+    cursor: pointer;
+}
+.room_profile_title .title_back_setting_box img {
+    width: 24px;
+    height: 24px;
+}
+
+.room_profile_title  .room_setting_input_box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
 
 .room_profile_wrap {
     width: 100%;
