@@ -136,15 +136,20 @@ export const formatUsers = async (user_list) => {
     return user_list;
   } else {
       // get info from os
-    const user_map = await getOSusers(user_list.map(u => u.wallet_address.toLowerCase()));
-      return user_list.map((s) => {
-        const u = user_map[s.wallet_address.toLowerCase()];
-        return {
-          ...s,
-          avatar_url: u.avatar,
-          displayname: u.name,
-        };
-      });
+    const user_map = await getOSusers(user_list.map(u => u.startsWith('0x') ? u.wallet_address.toLowerCase() : `0x${u.wallet_address.toLowerCase()}`));
+    console.log('user_map: ', user_map)
+    return user_list.map((s) => {
+      const u = user_map[s.wallet_address.toLowerCase()];
+      const newData = {};
+      if (u) {
+        newData.avatar_url = u.avatar;
+        newData.displayname = u.name;
+      }
+      return {
+        ...s,
+        ...newData,
+      };
+    });
   }
 }
 
