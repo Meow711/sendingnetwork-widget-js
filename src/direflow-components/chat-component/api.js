@@ -158,10 +158,13 @@ class Api {
     }
   };
 
-  logout = async () => {
-    const keyList = ['sdn_access_token', 'sdn_user_id', 'sdn_user_address'];
-    keyList.map(key => localStorage.removeItem(key));
-    return this._client.logout();
+  logout = async (callback) => {
+    if (window && window.toLogout) {
+      window.toLogout(() => {
+        this.userData = null;
+        callback && callback();
+      });
+    }
   };
 
   joinRoom = (roomId, callBack) => {
