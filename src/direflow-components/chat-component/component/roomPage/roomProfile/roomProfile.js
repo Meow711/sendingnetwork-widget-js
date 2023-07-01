@@ -8,7 +8,6 @@ import { calculateRoomName, formatUsers, showToast } from "../../../utils/index"
 import EditIcon from "../../../imgs/edit.png";
 
 const RoomProfile = ({ room = {}, backClick }) => {
-    const [showSetting, setShowSetting] = useState(false);
     const [roomName, setRoomName] = useState("");
     const [joinedMembers, setJoinedMembers] = useState([]);
     const [showEdit, setShowEdit] = useState(false);
@@ -37,7 +36,7 @@ const RoomProfile = ({ room = {}, backClick }) => {
     }, []);
 
     const handleBackClick = () => {
-        showSetting ? setShowSetting(false) : backClick();
+        backClick('room', roomName);
     };
 
     const handleSettingLeave = async () => {
@@ -66,14 +65,15 @@ const RoomProfile = ({ room = {}, backClick }) => {
             });
             return;
         }
-        api._client.setRoomName(room.roomId, editName, () => {
+        await api._client.setRoomName(room.roomId, editName, () => {
             showToast({
                 type: "success",
                 msg: "Operation successful",
             });
-			setRoomName(editName);
-			setShowEdit(true);
+            setRoomName(editName);
+            setShowEdit(false);
         });
+        
     };
 
     const handleCancelName = async () => {

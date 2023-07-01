@@ -8,6 +8,7 @@ import PinnedMsgCard from "./pinnedMsgCard/pinnedMsgCard";
 import InvitePage from "../invitePage/invitePage";
 import MemberProfile from "./memberProfile/memberProfile";
 import { api } from "../../api";
+import {calculateRoomName} from "../../utils/index";
 
 
 const RoomPage = ({ roomId, callback, onChangeRoom }) => {
@@ -18,6 +19,7 @@ const RoomPage = ({ roomId, callback, onChangeRoom }) => {
   const [showType, setShowType] = useState('room');
   const [pinnedIds, setPinnedIds] = useState([]);
   const [memberProfileId, setMemberProfileId] = useState("");
+  const [curRoomName, setCurRoomName] = useState("");
 
   useEffect(() => {
     if (roomId && roomId !== curRoomId) {
@@ -35,6 +37,8 @@ const RoomPage = ({ roomId, callback, onChangeRoom }) => {
       }
       initPinnedEvent(room)
       setCurRoom(room)
+      const tmpName = calculateRoomName(room, !room.isDmRoom());
+      setCurRoomName(tmpName);
     }
   }
 
@@ -64,10 +68,15 @@ const RoomPage = ({ roomId, callback, onChangeRoom }) => {
   }
 
   const handleProfileBack = (type) => {
+    console.log('type: ', type);
     switch (type) {
       case 'leaved': onBack(true);
         break;
       case 'invite': setShowType('invite');
+        break;
+      case 'room':
+        setShowType('room');
+        initRoomData(curRoomId)
         break;
       default: setShowType('room');
         break;
@@ -115,7 +124,7 @@ const RoomPage = ({ roomId, callback, onChangeRoom }) => {
           setShowType('room');
         }} />}
         <div className="chat_widget_room_page">
-          <RoomTitle room={curRoom} onBack={onBack} setClick={() => setShowType('profile')} />
+          <RoomTitle roomName={curRoomName} onBack={onBack} setClick={() => setShowType('profile')} />
           {pinnedIds.length > 0 && (
             <PinnedMsgCard
               roomId={roomId}
