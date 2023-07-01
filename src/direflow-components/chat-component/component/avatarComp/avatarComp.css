@@ -102,3 +102,65 @@
   width: 100%;
   height: auto;
 }
+
+/* avatar-mult-comp-4 */
+.avatar-mult-comp-4 {
+  width: 100%;
+  height: 100%;
+  border-radius: 16%;
+  overflow: hidden;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.avatar-mult-comp-4_1 {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+.avatar-mult-comp-4_1_imgBox {
+  width: 50%;
+  height: 100%;
+  background-color: #ccc;
+  background-size: 70% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.avatar-mult-comp-4_1_imgBox img {
+  width: 100%;
+  height: 100%;
+}
+
+
+/* avatar-mult-comp-9 */
+.avatar-mult-comp-9 {
+  width: 100%;
+  height: 100%;
+  border-radius: 16%;
+  overflow: hidden;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.avatar-mult-comp-9_1 {
+  width: 100%;
+  height: 33.3%;
+  display: flex;
+  justify-content: space-between;
+}
+.avatar-mult-comp-9_1_imgBox {
+  width: 33.3%;
+  height: 100%;
+  background-color: #ccc;
+  background-size: 70% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.avatar-mult-comp-9_1_imgBox img {
+  width: 100%;
+  height: 100%;
+}

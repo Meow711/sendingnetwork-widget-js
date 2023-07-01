@@ -105,7 +105,7 @@ const InvitePage = ({ roomId, onBack, title }) => {
 		if (selectList.length <= 0) {
       showToast({
         type: 'info',
-        msg: 'you not select member'
+        msg: 'None selected'
       })
 			return;
 		}

@@ -21,6 +21,7 @@ const App = (props) => {
   useEffect(() => {
     window.setShowWidget = (show) => { setShowWidget(show) };
     window.widgetRootDom = widgetRootRef.current;
+    window.toLogout = (callback) => { handleLogout(callback) };
     init();
     return stop;
   }, []);
@@ -66,6 +67,23 @@ const App = (props) => {
       return [...rooms];
     });
   };
+
+  const handleLogout = async (callback) => {
+    await stop();
+    api._client.logout(() => {
+      const keyList = ['sdn_access_token', 'sdn_user_id', 'sdn_user_address'];
+      keyList.map(key => localStorage.removeItem(key));
+      setRooms([]);
+      showToast({
+        type: 'success',
+        msg: 'Operation successful',
+        callback: () => {
+          setPageType('loginPage');
+          callback && callback();
+        }
+      });
+    })
+  }
 
   const onChangeRoom = (new_room_id) => {
     setCurRoomId(new_room_id);

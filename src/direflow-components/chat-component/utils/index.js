@@ -115,7 +115,7 @@ export const calculateRoomName = (room, isShowCount) => {
   }
   // show member count
   if (isShowCount) {
-    if (membersLen >= 2) {
+    if (membersLen > 2) {
       result = `${result} (${membersLen})`
     }
   }

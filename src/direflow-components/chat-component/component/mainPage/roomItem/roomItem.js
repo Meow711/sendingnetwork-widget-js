@@ -115,14 +115,23 @@ const RoomItem = ({ room, enterRoom, myUserData }) => {
     };
 
     const renderAvatar = () => {
-        // if (memberList.length >= 3) {
-        // 	// const arr = memberList.map
-        // 	console.log('widget---=', memberList)
-        // 	return <AvatarMutiComp />
-        // } else {
-        // 	return <AvatarComp />
-        // }
-        return <AvatarComp />;
+        if (memberList.length === 2) {
+			const list = memberList.filter(v => v.userId !== api.getUserId())
+			const anotherUser = list[0] || {};
+			return <AvatarComp url={anotherUser?.user?.avatarUrl} />
+		} else if (memberList.length >= 3) {
+			const urls = [];
+			memberList.map(m => {
+				if (m && m.user && m.user.avatarUrl) {
+					urls.push(m.user.avatarUrl)
+				}
+			})
+			const fillArr = new Array(memberList.length - urls.length).fill(null);
+			urls.push(...fillArr)
+			return <AvatarMutiComp urls={urls} />
+		} else {
+			return <AvatarComp />
+		}
     };
 
     return (
