@@ -96,8 +96,8 @@ const RoomProfile = ({ room = {}, backClick }) => {
                                 defaultValue={editName}
                                 onChange={(e) => setEditName(e.target.value)}
                             />
-                            <button onClick={handleSaveName}>Save</button>
-                            <button onClick={handleCancelName}>Cancel</button>
+                            <div className="btn btn-title btn-title-save" onClick={handleSaveName}>Save</div>
+                            <div className="btn btn-title btn-title-cancel" onClick={handleCancelName}>Cancel</div>
                         </div>
                     ) : (
                         <div className="title_back_setting_box">

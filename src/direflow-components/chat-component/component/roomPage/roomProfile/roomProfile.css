@@ -55,6 +55,15 @@
     align-items: center;
     gap: 5px;
 }
+.room_profile_title  .room_setting_input_box  .room_setting_input {
+    padding-left: 5px;
+    border-radius: 5px;
+    border-color: var(--theme-color);
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    outline: none;
+}
 
 .room_profile_wrap {
     width: 100%;
@@ -181,6 +190,7 @@
     text-align: center;
     cursor: pointer;
 }
+
 .btn-invite {
     background-color: var(--theme-color);
     border-color: var(--theme-color);
@@ -208,3 +218,27 @@
     background-color: rgba(138, 0, 0, 0.8) ;
 }
 
+
+.btn-title {
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+}
+.btn-title-save {
+    background-color: var(--theme-color);
+    border-color: var(--theme-color);
+    color: white
+}
+.btn-title-save:hover {
+    background-color: var(--theme-color-400);
+}
+.btn-title-cancel {
+    background-color: var(--theme-secondary-color-100);
+    border-color: var(--theme-color);
+    color: var(--theme-color)
+}
+.btn-title-cancel:hover {
+    background-color: var(--theme-secondary-color-200);
+
+}

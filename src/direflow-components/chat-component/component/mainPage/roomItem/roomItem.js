@@ -156,10 +156,10 @@ const RoomItem = ({ room, enterRoom, myUserData }) => {
                     <div className="room-item-center">
                         <p className="room-item-roomName">{formatTextLength(roomName, 30, 10)}</p>
                         <div className="room-item-invite">
-                            <div className="room-item-invite-btns" onClick={() => accept(room.roomId)}>
+                            <div className="room-item-invite-btns btn-primary" onClick={() => accept(room.roomId)}>
                                 accept
                             </div>
-                            <div className="room-item-invite-btns" onClick={() => reject(room.roomId)}>
+                            <div className="room-item-invite-btns btn-outline" onClick={() => reject(room.roomId)}>
                                 reject
                             </div>
                         </div>

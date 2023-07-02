@@ -98,8 +98,23 @@
 	align-items: center;
 	justify-content: center;
 	border-radius: 5px;
-	background: #37ca9e;
 	cursor: pointer;
+}
+
+.room-item-invite-btns.btn-primary {
+  background-color: var(--theme-color);
+  border-color: var(--theme-color);
+}
+.room-item-invite-btns.btn-primary:hover {
+  background-color: var(--theme-color-400);
+}
+.room-item-invite-btns.btn-outline {
+  background-color: var(--theme-secondary-color-100);
+  border: 1px solid var(--theme-color);
+  color: var(--theme-color) !important;
+}
+.room-item-invite-btns.btn-outline:hover {
+  background-color: var(--theme-secondary-color-200);
 }
 
 /* room-item-right */
