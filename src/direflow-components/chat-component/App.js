@@ -157,6 +157,11 @@ const App = (props) => {
           "--sendMessage-bg-color": props.sendMessageBgColor,
           "--message-sender-color": props.messageSenderColor,
           "--sendMessage-border-color": props.sendMessageBorderColor,
+          "--theme-color": props.colorPrimary500,
+          "--theme-color-400": props.colorPrimary400,
+          "--theme-secondary-color-100": props.colorPrimaryTransparent100,
+          "--theme-secondary-color-200": props.colorPrimaryTransparent200,
+          "--theme-secondary-color-300": props.colorPrimaryTransparent300,
         }}
       >
         <div
@@ -194,7 +199,12 @@ App.defaultProps = {
   rightMessageTsColor: "rgba(255, 255, 255, 0.5)",
   sendMessageBgColor: "#fff",
   messageSenderColor: "#333",
-  sendMessageBorderColor: "#fff"
+  sendMessageBorderColor: "#fff",
+  colorPrimary500: '#a16eff',
+  colorPrimary400: '#b18aff',
+  colorPrimaryTransparent100: "rgba(161, 110, 255, 0.08)",
+  colorPrimaryTransparent200: "rgba(161, 110, 255, 0.16)",
+  colorPrimaryTransparent300: "rgba(161, 110, 255, 0.24)"
 };
 
 App.propTypes = {
@@ -218,6 +228,11 @@ App.propTypes = {
   sendMessageBgColor: PropTypes.string,
   messageSenderColor: PropTypes.string,
   sendMessageBorderColor: PropTypes.string,
+  colorPrimary500: PropTypes.string,
+  colorPrimary400: PropTypes.string,
+  colorPrimaryTransparent100: PropTypes.string,
+  colorPrimaryTransparent200: PropTypes.string,
+  colorPrimaryTransparent300: PropTypes.string,
 };
 
 export default App;

@@ -128,13 +128,13 @@ const RoomProfile = ({ room = {}, backClick }) => {
                     </div>
                     {/* btns */}
                     <div className="info_room_btns">
-                        <span className="btn" onClick={() => backClick("invite")}>
+                        <span className="btn btn-invite" onClick={() => backClick("invite")}>
                             Invite
                         </span>
-                        <span className="btn" onClick={handleSettingLeave}>
+                        <span className="btn btn-leave" onClick={handleSettingLeave}>
                             Leave
                         </span>
-                        <span className="btn" onClick={handleDeleteRoom}>
+                        <span className="btn btn-delete" onClick={handleDeleteRoom}>
                             Delete
                         </span>
                     </div>

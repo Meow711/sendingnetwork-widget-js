@@ -168,6 +168,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    padding-left: 20px;
 }
 
 .btn {
@@ -179,5 +180,31 @@
     border-radius: 5px;
     text-align: center;
     cursor: pointer;
+}
+.btn-invite {
+    background-color: var(--theme-color);
+    border-color: var(--theme-color);
+    color: white
+}
+.btn-invite:hover {
+    background-color: var(--theme-color-400);
+}
+
+.btn-leave {
+    border-color: rgb(138, 0, 0);
+    color: darkred;
+}
+.btn-leave:hover {
+    background-color: rgba(138, 0, 0, 0.1);
+}
+
+.btn-delete {
+    border-color: darkred;
+    background-color: darkred ;
+    color: #fff;
+}
+.btn-delete:hover {
+    border-color: rgba(138, 0, 0, 0.8);
+    background-color: rgba(138, 0, 0, 0.8) ;
 }
 
