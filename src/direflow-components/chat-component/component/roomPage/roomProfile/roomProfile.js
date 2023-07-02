@@ -15,28 +15,28 @@ const RoomProfile = ({ room = {}, backClick }) => {
 
     const handleMembers = async () => {
         const members = room.getJoinedMembers();
-        const formatMembers = members.map((member) => { 
+        const formatMembers = members.map((member) => {
             const wallet = member.userId.split(":")[1];
             return {
                 ...member.user,
                 wallet_address: wallet,
-            }
-        })
-        const newMembers = await formatUsers(formatMembers)
+            };
+        });
+        const newMembers = await formatUsers(formatMembers);
         const tmpName = calculateRoomName(room, true);
         console.log("members:", newMembers);
 
         setRoomName(tmpName);
         setEditName(tmpName);
         setJoinedMembers(newMembers);
-    }
+    };
 
     useEffect(() => {
-        handleMembers()
+        handleMembers();
     }, []);
 
     const handleBackClick = () => {
-        backClick('room', roomName);
+        backClick("room", roomName);
     };
 
     const handleSettingLeave = async () => {
@@ -73,7 +73,6 @@ const RoomProfile = ({ room = {}, backClick }) => {
             setRoomName(editName);
             setShowEdit(false);
         });
-        
     };
 
     const handleCancelName = async () => {
@@ -96,15 +95,21 @@ const RoomProfile = ({ room = {}, backClick }) => {
                                 defaultValue={editName}
                                 onChange={(e) => setEditName(e.target.value)}
                             />
-                            <div className="btn btn-title btn-title-save" onClick={handleSaveName}>Save</div>
-                            <div className="btn btn-title btn-title-cancel" onClick={handleCancelName}>Cancel</div>
+                            <div className="btn btn-title btn-title-save" onClick={handleSaveName}>
+                                Save
+                            </div>
+                            <div className="btn btn-title btn-title-cancel" onClick={handleCancelName}>
+                                Cancel
+                            </div>
                         </div>
                     ) : (
                         <div className="title_back_setting_box">
                             <span className="title_back_setting">{roomName}</span>
-                            <span onClick={() => setShowEdit(true)} className="btn-edit">
-                                <img src={EditIcon } alt="" />
-                            </span>
+                            {joinedMembers.length > 1 && (
+                                <span onClick={() => setShowEdit(true)} className="btn-edit">
+                                    <img src={EditIcon} alt="" />
+                                </span>
+                            )}
                         </div>
                     )}
                 </div>
