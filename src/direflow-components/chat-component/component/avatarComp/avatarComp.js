@@ -5,7 +5,7 @@ import { morePagePersonIcon } from "../../imgs/index";
 import { api } from "../../api";
 
 export const AvatarComp = ({ url = "" }) => {
-    const [avatarUrl, setAvatarUrl] = useState(false);
+    const [avatarUrl, setAvatarUrl] = useState();
 
     useEffect(() => {
         if (/(http|https):\/\/([\w.]+\/?)\S*/.test(url)) {
